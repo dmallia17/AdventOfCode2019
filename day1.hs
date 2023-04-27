@@ -4,7 +4,10 @@
 import System.IO
 
 req_fuel :: Int -> Int
-req_fuel mass = mass `div` 3 - 2
+req_fuel mass 
+  | curr_fuel <= 0 = 0
+  | otherwise = curr_fuel + (req_fuel curr_fuel) 
+  where curr_fuel = mass `div` 3 - 2
 
 get_total_fuel :: [String] -> Int
 get_total_fuel = foldr (\val -> (+ (req_fuel $ read val :: Int))) 0
